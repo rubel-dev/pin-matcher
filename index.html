@@ -12,37 +12,37 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input class="form-control" type="text">
+                    <input id="display-pin" class="form-control" type="text">
                     <button id="generate" class="generate-btn">Generate Pin</button>
                 </div> 
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text" id="display">
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div class="button">7</div>
-                              <div class="button">8</div>
-                              <div class="button">9</div>
+                              <div class="button" onclick="calculation(this.innerText)">7</div>
+                              <div class="button" onclick="calculation(this.innerText)">8</div>
+                              <div class="button" onclick="calculation(this.innerText)">9</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">4</div>
-                              <div class="button">5</div>
-                              <div class="button">6</div>
+                              <div class="button" onclick="calculation(this.innerText)">4</div>
+                              <div class="button" onclick="calculation(this.innerText)">5</div>
+                              <div class="button" onclick="calculation(this.innerText)">6</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">1</div>
-                              <div class="button">2</div>
-                              <div class="button">3</div>
+                              <div class="button" onclick="calculation(this.innerText)">1</div>
+                              <div class="button" onclick="calculation(this.innerText)">2</div>
+                              <div class="button" onclick="calculation(this.innerText)">3</div>
                             </div>
                             <div class="calc-button-row">
-                                <div class="button"><</div>
-                                <div class="button">0</div>
-                                <div class="button">C</div>
+                                <div class="button" onclick="backSpace(this.innerText)"><</div>
+                                <div class="button" onclick="calculation(this.innerText)">0</div>
+                                <div class="button" onclick="clearAll()">C</div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
+                                <button id="submit" type="submit" class="submit-btn">Submit</button>
                                 <p class="action-left">3 try left</p>
                             </div>
                     </div>
@@ -50,14 +50,44 @@
             </div>
         </div>
         <div class="notify-section">
-            <p class="notify">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            <p id="false" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="true" class="notify">✅ Pin Matched... Secret door is opening for you</p>
         </div>
     </div>
     <script>
+           
         document.getElementById('generate').addEventListener('click',function(){
-            console.log('i am click again again')
+            var randomNumber = Math.random() * 9000;
+            generatePin = Math.floor(randomNumber + 1000); //global variable to access again
+            document.getElementById('display-pin').value = generatePin;
+             
         })
+
+       function calculation(input){
+            document.getElementById('display').value += input; 
+       }
+       function clearAll(){
+        document.getElementById('display').value = "";
+       }
+
+       function backSpace(input){
+        document.getElementById('display').value = document.getElementById('display').value .slice(0,-1)
+       }
+     
+
+       document.getElementById('submit').addEventListener('click',function(){
+           var displayValue = document.getElementById('display').value;
+           console.log(displayValue)
+           if(generatePin == displayValue){
+             document.getElementById("true").style.display = 'block';  
+           } 
+           else{
+            document.getElementById("false").style.display = 'block'; 
+           } 
+           document.getElementById('display').value = ''; 
+       })
+       
+
     </script>
 </body>
 </html>
